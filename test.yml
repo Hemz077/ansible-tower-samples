@@ -1,0 +1,7 @@
+--- 
+- name: copy file
+  hosts: all
+  tasks:
+   - name: copy the content
+     dest: /tmp/resolv1.conf
+     content: "content from git repo \n"
