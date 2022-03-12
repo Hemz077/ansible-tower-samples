@@ -1,0 +1,24 @@
+---
+- name: Apache installation
+  hosts: all
+  become: yes
+  tasks:
+  #Install httpd
+  - name: Install httpd
+    yum:
+      name: httpd
+      state: latest
+  #Edit config file
+  #mkdir
+  #create new html file
+
+  #create index.html
+  - name: copy index.html
+    copy:
+      src: /home/ec2-user/index.html
+      dest: /var/www/html/index.html
+  #start service
+  - name: start service
+    service:
+      name: httpd
+      state: started
