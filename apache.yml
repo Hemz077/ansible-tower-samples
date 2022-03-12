@@ -9,16 +9,33 @@
       name: httpd
       state: latest
   #Edit config file
+  - name: Change document root in conf file
+    lineinfile:
+      path: /etc/httpd/conf/httpd.conf
+      regexp: '^DocumentRoot'
+      line: DocumentRoot "/home/ec2-user/var"
+  - name: Change directory in conf file
+    lineinfile:
+      path: /etc/httpd/conf/httpd.conf
+      regexp: '<Directory "/var/www/html">'
+      line: '<Directory "/home/ec2-user/var">'
   #mkdir
+  - name: create /home/ec2-user/var
+    file:
+      path: /home/ec2-user/var
+      state: directory
   #create new html file
-
-  #create index.html
-  - name: copy index.html
+  - name: create index.html inside /home/ec2-user/var
     copy:
-      src: /home/ec2-user/index.html
-      dest: /var/www/html/index.html
-  #start service
+      dest: /home/ec2-user/var/index.html
+      content: Content added using Ansible
+  #start service if not started
   - name: start service
     service:
       name: httpd
       state: started
+  #restart service after configuration change
+  - name: restart service
+    service:
+      name: httpd
+      state: restarted
