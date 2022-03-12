@@ -1,0 +1,10 @@
+- name: Installing a Specific cgit version
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install epel from amazon extras. No module available. Using shell module
+      shell: amazon-linux-extras install epel -y
+    - name: Installation of git from epel
+      yum:
+        name: cgit-1.2.3-8.el7
+        state: installed
